@@ -1,14 +1,11 @@
-import { Draggable } from '../models/drag-drop.js';
-import { Project } from '../models/project.js';
-import { Component } from './base-component.js';
-import { autoBind } from '../decorators/autobind.js';
-
+import { Draggable } from '../models/drag-drop';
+import { Project } from '../models/project';
+import Component from './base-component';
+import { autobind } from '../decorators/autobind';
 
 // ProjectItem Class
-export class ProjectItem
-  extends Component<HTMLUListElement, HTMLLIElement>
-  implements Draggable
-{
+export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>
+  implements Draggable {
   private project: Project;
 
   get persons() {
@@ -22,17 +19,17 @@ export class ProjectItem
   constructor(hostId: string, project: Project) {
     super('single-project', hostId, false, project.id);
     this.project = project;
+
     this.configure();
     this.renderContent();
   }
 
-  @autoBind
+  @autobind
   dragStartHandler(event: DragEvent) {
     event.dataTransfer!.setData('text/plain', this.project.id);
     event.dataTransfer!.effectAllowed = 'move';
   }
 
-  @autoBind
   dragEndHandler(_: DragEvent) {
     console.log('DragEnd');
   }

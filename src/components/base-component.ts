@@ -1,5 +1,8 @@
 // Component Base Class
-export abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+
+export const something = '...';
+
+export default abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   templateElement: HTMLTemplateElement;
   hostElement: T;
   element: U;
@@ -8,12 +11,13 @@ export abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     templateId: string,
     hostElementId: string,
     insertAtStart: boolean,
-    newElementId: string
+    newElementId?: string
   ) {
     this.templateElement = document.getElementById(
       templateId
     )! as HTMLTemplateElement;
     this.hostElement = document.getElementById(hostElementId)! as T;
+
     const importedNode = document.importNode(
       this.templateElement.content,
       true
@@ -22,14 +26,17 @@ export abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     if (newElementId) {
       this.element.id = newElementId;
     }
+
     this.attach(insertAtStart);
   }
-  private attach(insertAtStart: boolean) {
+
+  private attach(insertAtBeginning: boolean) {
     this.hostElement.insertAdjacentElement(
-      insertAtStart ? 'afterbegin' : 'beforeend',
+      insertAtBeginning ? 'afterbegin' : 'beforeend',
       this.element
     );
   }
+
   abstract configure(): void;
   abstract renderContent(): void;
 }

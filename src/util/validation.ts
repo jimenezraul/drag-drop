@@ -1,4 +1,4 @@
-// validation
+// Validation
 export interface Validatable {
   value: string | number;
   required?: boolean;
@@ -7,6 +7,7 @@ export interface Validatable {
   min?: number;
   max?: number;
 }
+
 export function validate(validatableInput: Validatable) {
   let isValid = true;
   if (validatableInput.required) {
